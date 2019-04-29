@@ -1,49 +1,68 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import {View, Text, StyleSheet} from 'react-native';
 
-type Props = {};
-export default class App extends Component<Props> {
+const restaurants = [
+  { name: 'Component Bistro', address: '123 Real Street'},
+  { name: 'Native Deli', address: '456 Generica Avenue'},
+  { name: 'Facebook Gastro pub', address: '100 Markzis lane'}
+];
+
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
+      <View sytle={styles.row}>
+        <Text style={styles.header}>Restaurant Review</Text>
+        {
+          restaurants.map((place, index) => {
+            return(
+              <View key={place.name} style={[
+                styles.row,
+                {backgroundColor: index % 2 === 0 ? 'white' : '#F3F3F7'}
+                ]}>
+                <View style={styles.edges}>
+                  <Text>{index + 1}</Text>
+                </View>
+
+                <View style={styles.nameAddress}>
+                  <Text>{place.name}</Text>
+                  <Text style={styles.addressTextColor}>{place.address}</Text>
+                </View>
+
+                <View style={styles.edges}>
+                  <Text>Info</Text>
+                </View>
+              </View>
+            )
+          })
+        }
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  header:{
+    padding: 40,
+    fontSize: 30,
+    textAlign: 'center',
+    color: '#006699',
+    fontWeight: '300'
+  },
+  row:{
+    flexDirection: 'row'
+  },
+  edges:{
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: 'center',
+    padding: 5
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  nameAddress:{
+    flexDirection: 'column',
+    flex: 8
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  addressTextColor: {
+    color: 'blue'
+  }
+})
