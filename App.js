@@ -42,9 +42,7 @@ export default class App extends Component {
     fetch('http://localhost:3000/restaurants')
       .then(response => response.json())
       .then(result => this.setState({ restaurants: result }))
-
   }
-
 
   render() {
 
@@ -62,7 +60,7 @@ export default class App extends Component {
 
         <FlatList
           data={
-            restaurants.filter(place => {
+            this.state.restaurants.filter(place => {
               return !this.state.search ||
               place.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1
             })
