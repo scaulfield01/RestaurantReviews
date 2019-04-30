@@ -4,10 +4,12 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  FlatList
+  FlatList,
+  Image
 } from 'react-native';
 import axios from 'axios';
 
+import PizzaImage from 'images/pizza.png';
 import Header from'components/Header';
 import RestaurantRow from 'components/RestaurantRow';
 
@@ -25,7 +27,15 @@ export default class App extends Component {
   render() {
 
     return (
-      <View sytle={styles.row}>
+      <View style={{
+        flex: 1
+      }}>
+        <View style={{
+          marginTop: 40,
+          alignItems: 'center'
+        }}>
+          <Image source={PizzaImage} />
+        </View>
         <Header />
         <TextInput
           style={styles.input}
@@ -46,7 +56,7 @@ export default class App extends Component {
           renderItem ={({item, index }) => 
             <RestaurantRow place={item} index={index} />
           }
-          keyExtractor={item => item.name}
+          keyExtractor={item => item.id}
           initialNumToRender={16}
           ListHeaderComponent={<View style={{height: 30}}/>}
         />

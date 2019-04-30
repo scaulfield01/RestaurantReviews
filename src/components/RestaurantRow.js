@@ -6,7 +6,8 @@ import {
 	Button,
 	TouchableOpacity,
 	TouchableHighlight,
-	TouchableWithoutFeedback
+	TouchableWithoutFeedback,
+	Image
 } from 'react-native';
 
 export default class RestaurantRow extends Component {
@@ -24,6 +25,8 @@ export default class RestaurantRow extends Component {
 			place, 
 			index
 		} = this.props
+
+		console.log(place.image);
 
 		return (
 			<View key={place.name} style={{ backgroundColor: index % 2 === 0 ? '#CAFAFE' : '#97CAEF'}}>
@@ -49,10 +52,18 @@ export default class RestaurantRow extends Component {
 			  </View>		   
 				    {
 				    	this.state.showInfo && 
-				    	<View>
-				    		<Text style={styles.info}>
-				    			Restaurant Info
-				    		</Text>
+				    	<View style={styles.info}>
+				    	  <Text>Restaurant Info</Text>
+				    	  <Image 
+				    	    source={{ 
+				    	      uri: `http://localhost:3000/images/${place.image}`,
+				    	    }} 
+				    	    style={{
+				    	      flex: 1,
+				    	      height: 100
+				    	    }}
+				    	    resizeMode="contain"
+				    	  />
 				    	</View>
 				    }
 			</View>
