@@ -1,47 +1,80 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  FlatList,
+  Image
+} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import axios from 'axios';
 
-type Props = {};
-export default class App extends Component<Props> {
+import PizzaImage from 'images/pizza.png';
+import Header from'components/Header';
+import RestaurantRow from 'components/RestaurantRow';
+
+export default class App extends Component {
+  state = {
+    search: null,
+    restaurants: []
+  }
+
+  componentDidMount(){
+    axios.get('http://localhost:3000/restaurants')
+      .then(result => this.setState({ restaurants: result.data }))
+  }
+
   render() {
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
+      <View style={{
+        flex: 1
+      }}>
+        <View style={{
+          marginTop: 40,
+          alignItems: 'center'
+        }}>
+          <Image source={PizzaImage} />
+        </View>
+        <Header />
+        <TextInput
+          style={styles.input}
+          placeholder="Search ..."
+          onChangeText={text => {
+            this.setState({ search: text })
+          }}
+          value={this.state.search}
+        />
+
+        <FlatList
+          data={
+            this.state.restaurants.filter(place => {
+              return !this.state.search ||
+              place.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1
+            })
+          }
+          renderItem ={({item, index }) => 
+            <RestaurantRow place={item} index={index} />
+          }
+          keyExtractor={item => item.name}
+          initialNumToRender={16}
+          ListHeaderComponent={<View style={{height: 30}}/>}
+        />
+
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  input: {
+    padding: 10,
+    paddingHorizontal: 20,
+    fontSize: 16,
+    color: '#444',
+    borderBottomWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#F5F5F5'
+  }
+})
