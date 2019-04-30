@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 
+import Header from'./Header';
+
 const restaurants = [
   { name: 'Component Bistro', address: '123 Real Street'},
   { name: 'Native Deli', address: '456 Generica Avenue'},
@@ -9,16 +11,14 @@ const restaurants = [
 ];
 
 export default class App extends Component {
-
   state = {
     search: null
   }
-
   render() {
+    
     return (
       <View sytle={styles.row}>
-        <Text style={styles.header}>Restaurant Review</Text>
-
+        <Header />
         <TextInput 
           style={styles.input}
           placeholder="Search ..."
@@ -60,23 +60,16 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
-  header:{
-    padding: 40,
-    fontSize: 30,
-    textAlign: 'center',
-    color: '#006699',
-    fontWeight: '300'
-  },
-  row:{
+  row: {
     flexDirection: 'row'
   },
-  edges:{
+  edges: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 5
   },
-  nameAddress:{
+  nameAddress: {
     flexDirection: 'column',
     flex: 8
   },
