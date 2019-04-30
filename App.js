@@ -7,6 +7,7 @@ import {
   FlatList,
   Image
 } from 'react-native';
+
 import axios from 'axios';
 
 import PizzaImage from 'images/pizza.png';
@@ -56,7 +57,7 @@ export default class App extends Component {
           renderItem ={({item, index }) => 
             <RestaurantRow place={item} index={index} />
           }
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.name}
           initialNumToRender={16}
           ListHeaderComponent={<View style={{height: 30}}/>}
         />
