@@ -1,25 +1,48 @@
 import React, {Component} from 'react';
-
-import {View, Text, StyleSheet, TextInput} from 'react-native';
-
-import Header from'./Header';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  FlatList
+} from 'react-native';
+import Header from'components/Header';
+import RestaurantRow from 'components/RestaurantRow';
 
 const restaurants = [
-  { name: 'Component Bistro', address: '123 Real Street'},
-  { name: 'Native Deli', address: '456 Generica Avenue'},
-  { name: 'Facebook Gastro pub', address: '100 Markzis lane'}
+  {name: 'Component Bistro', address: '123 Real Street'},
+  {name: 'Native Deli', address: '456 Generica Avenue'},
+  {name: 'Facebook Gastro pub', address: '100 Markzis lane'},
+  {name: 'Ratke Group', address: '00 Londonderry Terrace'},
+  {name: 'Beatty and Sons', address: '209 Duke Alley'},
+  {name: 'Becker Inc', address: '2247 Green Ridge Terrace'},
+  {name: 'Jacobs Group', address: '72753 Waxwing Plaza'},
+  {name: 'Hartmann, Wolf and Dietrich', address: '35 Westridge Plaza'},
+  {name: 'Boyer-Corkery', address: '638 Continental Center'},
+  {name: 'Littel, Goyette and Hansen', address: '2079 Cherokee Circle'},
+  {name: 'Greenholt, Strosin and Volkman', address: '1560 Loftsgordon Crossing'},
+  {name: 'Hamill Group', address: '321 Carpenter Pass'},
+  {name: 'Ortiz, Goodwin and Anderson', address: '4 Tony Parkway'},
+  {name: 'Bernier, Rath and Homenick', address: '36630 West Junction'},
+  {name: 'Swaniawski Inc', address: '8847 Nelson Pass'},
+  {name: 'Walker LLC', address: '283 Pankratz Pass'},
+  {name: 'Prohaska-Howe', address: '3538 Hallows Avenue'},
+  {name: 'Gulgowski-Bechtelar', address: '09537 Sunbrook Junction'},
+  {name: 'Durgan-Koss', address: '9 Farwell Crossing'},
+  {name: 'Ernser-Turner', address: '635 Spohn Pass'}
 ];
+
 
 export default class App extends Component {
   state = {
     search: null
   }
   render() {
-    
+
     return (
       <View sytle={styles.row}>
         <Header />
-        <TextInput 
+        <TextInput
           style={styles.input}
           placeholder="Search ..."
           onChangeText={text => {
@@ -28,56 +51,42 @@ export default class App extends Component {
           value={this.state.search}
         />
 
-        {
-          restaurants.filter(place => {
-            return !this.state.search ||
-              place.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1
-          }).map((place, index) => {
-            return(
-              <View key={place.name} style={[
-                styles.row,
-                {backgroundColor: index % 2 === 0 ? 'white' : '#F3F3F7'}
-                ]}>
-                <View style={styles.edges}>
-                  <Text>{index + 1}</Text>
-                </View>
+        <FlatList
+          data={
+            restaurants.filter(place => {
+              return !this.state.search ||
+              place.name.toLowerCase().indexOf(this.state.search.toLowerCase())
+            })
+          }
+          renderItem ={({item, index }) => 
+            <RestaurantRow place={item} index={index} />
+          }
+          keyExtractor={item => item.name}
+          initialNumToRender={16}
+        />
 
-                <View style={styles.nameAddress}>
-                  <Text>{place.name}</Text>
-                  <Text style={styles.addressTextColor}>{place.address}</Text>
-                </View>
+{/*        <ScrollView contentContainerStyle={{
+          paddingTop: 10,
+          paddingBottom: 30
+        }}>
+          {
+            restaurants.filter(place => {
+              return !this.state.search ||
+                place.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1
+            }).map((place, index) => {
+              return(
 
-                <View style={styles.edges}>
-                  <Text>Info</Text>
-                </View>
-              </View>
-            )
-          })
-        }
+              )
+            })
+          }
+        </ScrollView>*/}
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row'
-  },
-  edges: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 5
-  },
-  nameAddress: {
-    flexDirection: 'column',
-    flex: 8
-  },
-  addressTextColor: {
-    color: 'blue'
-  },
   input: {
-    marginBottom: 30,
     padding: 10,
     paddingHorizontal: 20,
     fontSize: 16,

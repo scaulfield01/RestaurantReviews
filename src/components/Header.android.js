@@ -1,8 +1,6 @@
-import React, { Component } from 'react'
-
-import { Text } from 'react-native'
-
-import HeaderStyle from './HeaderStyle'
+import React, { Component } from 'react';
+import { Text } from 'react-native';
+import HeaderStyle from 'styles/HeaderStyle';
 
 export default class Header extends Component {
 
