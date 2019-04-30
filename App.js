@@ -55,7 +55,7 @@ export default class App extends Component {
           data={
             restaurants.filter(place => {
               return !this.state.search ||
-              place.name.toLowerCase().indexOf(this.state.search.toLowerCase())
+              place.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1
             })
           }
           renderItem ={({item, index }) => 
@@ -63,23 +63,9 @@ export default class App extends Component {
           }
           keyExtractor={item => item.name}
           initialNumToRender={16}
+          ListHeaderComponent={<View style={{height: 30}}/>}
         />
 
-{/*        <ScrollView contentContainerStyle={{
-          paddingTop: 10,
-          paddingBottom: 30
-        }}>
-          {
-            restaurants.filter(place => {
-              return !this.state.search ||
-                place.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1
-            }).map((place, index) => {
-              return(
-
-              )
-            })
-          }
-        </ScrollView>*/}
       </View>
     );
   }
