@@ -5,12 +5,15 @@ import {
   Text,
   ScrollView,
   Image,
-  StyleSheet
+  StyleSheet,
+  TouchableOpacity
 } from 'react-native'
 
-import Stars from 'components/Stars'
+import Stars from 'components/Stars';
 
-export default class RestaurantInfo extends Component {
+import { withNavigation } from 'react-navigation';
+
+class RestaurantInfo extends Component {
 
   static navigationOptions = {
     title: 'Restaurant Info',
@@ -22,6 +25,10 @@ export default class RestaurantInfo extends Component {
     headerTitleStyle: {
       color: '#FFF'
     }
+  }
+
+  addReview = () => {
+    this.props.navigation.navigate('AddReview');
   }
 
 	render() {
@@ -41,12 +48,20 @@ export default class RestaurantInfo extends Component {
             <Text style={styles.name}>{place.name}</Text>
             <Text style={styles.address}>{place.address}</Text>
             <Stars rating={place.rating} />
+              <TouchableOpacity 
+                style={styles.button}
+                onPress={this.addReview}
+              >
+                <Text style={styles.buttonText}>Add Review</Text>
+              </TouchableOpacity>
           </View>
         </View>
 			</ScrollView> 
 		)
 	}
 }
+
+export default withNavigation(RestaurantInfo);
 
 const styles = StyleSheet.create({
   root: {
@@ -70,5 +85,19 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     margin: 20
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: '#FC4445',
+    borderRadius: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: '#97CAEF',
+    marginTop: 10
+  },
+  buttonText: {
+    color: '#FFF',
+    fontSize: 12,
+    textAlign: 'center'
   }
 })
